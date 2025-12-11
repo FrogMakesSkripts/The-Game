@@ -12,6 +12,8 @@ extends CharacterBody2D
 @export var acceleration = 1.5
 @export var deceleration = 0.7
 
+@onready var held_item_texture_right: Sprite2D = $HeldItemTextureRight
+@onready var held_item_texture_left: Sprite2D = $HeldItemTextureLeft
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var coyote_timer: Timer = $CoyoteTimer
 
@@ -38,7 +40,14 @@ func _physics_process(delta: float) -> void:
 		animated_sprite.play("Idle")
 	else:
 		animated_sprite.play("Jump")
-
+	if animated_sprite.flip_h == false:
+		held_item_texture_left.visible = false
+		held_item_texture_right.visible = true
+		held_item_texture_left.flip_h = false
+	if animated_sprite.flip_h == true:
+		held_item_texture_left.visible = true
+		held_item_texture_right.visible = false
+		held_item_texture_left.flip_h = true
 # INERTIA
 	inertia = clamp(inertia, -max_inertia, max_inertia)
 	if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
@@ -84,6 +93,10 @@ func get_trailing_number(s: String) -> int:
 		else:
 			break
 	return int(digits)
+
+func update_held_item(item: String):
+	held_item_texture_right.texture = load(item)
+	held_item_texture_left.texture = load(item)
 
 func update_inventory():
 	pass
