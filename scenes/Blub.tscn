@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://c6i0omgtrpc3e"]
+
+[ext_resource type="Texture2D" uid="uid://wfjfkyfwkcib" path="res://assets/sprites/Blub Animation Spritesheet.png" id="1_npgy2"]
+[ext_resource type="Script" uid="uid://c0tl6nl2f4smx" path="res://scripts/blub.gd" id="1_sqqpf"]
+[ext_resource type="PackedScene" uid="uid://bw1h85152uc0s" path="res://scenes/death.tscn" id="2_sqqpf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqqpf"]
+atlas = ExtResource("1_npgy2")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1grpj"]
+atlas = ExtResource("1_npgy2")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i44kp"]
+atlas = ExtResource("1_npgy2")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7okjy"]
+atlas = ExtResource("1_npgy2")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_87d82"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sqqpf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1grpj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i44kp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7okjy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0q2bm"]
+radius = 4.0
+height = 14.0
+
+[node name="Blub" type="Node2D"]
+script = ExtResource("1_sqqpf")
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-12, 0)
+collision_mask = 4
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+target_position = Vector2(12, 0)
+collision_mask = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 1)
+sprite_frames = SubResource("SpriteFrames_87d82")
+autoplay = "default"
+frame = 2
+frame_progress = 0.2969114
+
+[node name="Death" parent="." instance=ExtResource("2_sqqpf")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Death"]
+position = Vector2(3, 1)
+shape = SubResource("CapsuleShape2D_0q2bm")

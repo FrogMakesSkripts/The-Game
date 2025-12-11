@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6f8mlkoddnpj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f2vhr"]
+size = Vector2(15.0625, 16.75)
+
+[node name="BlubWall" type="StaticBody2D"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_f2vhr")
