@@ -1,0 +1,17 @@
+Copyright (c) 2025 FrogMakesSkripts
+
+Permission is granted to any person to use, copy, modify, and distribute the
+assets or code in this repository for personal or non-commercial use.
+
+Commercial use is allowed under the following condition:
+
+If you release, sell, or otherwise profit from any product or service that
+includes or depends on these assets or code, you must provide the original
+creator (FrogMakesSkripts) with a revenue share of 10% of all gross earnings from
+that product or service unless a different percentage is agreed upon in
+writing.
+
+If you do not agree to these terms, you do not have permission to use these
+assets or code commercially.
+
+This license may be revoked for violations.
