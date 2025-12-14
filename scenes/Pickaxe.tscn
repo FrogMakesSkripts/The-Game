@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dxhn4qdfo6250"]
 
 [ext_resource type="Script" uid="uid://ccdh705a442kt" path="res://scripts/pickaxe.gd" id="1_n8kic"]
-[ext_resource type="Texture2D" uid="uid://dty6ccfqw33y5" path="res://assets/items/Basic_Pickaxe.png" id="2_n8kic"]
+[ext_resource type="Texture2D" uid="uid://dty6ccfqw33y5" path="res://assets/sprites/items/Basic_Pickaxe.png" id="2_n8kic"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n8kic"]
 radius = 7.071068
@@ -29,5 +29,5 @@ scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_ng6u3")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_entered" from="PickaxePoint" to="." method="_on_pickaxe_point_right_body_entered"]
 [connection signal="body_entered" from="PickaxePoint" to="." method="_on_pickaxe_point_body_entered"]
+[connection signal="body_entered" from="PickaxePoint" to="." method="_on_pickaxe_point_right_body_entered"]

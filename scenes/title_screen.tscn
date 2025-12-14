@@ -43,19 +43,22 @@ uppercase = true
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
-[node name="Start" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="Buttons" type="VBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Start" type="Button" parent="PanelContainer/VBoxContainer/Buttons"]
 layout_mode = 2
 theme = ExtResource("1_fgkus")
 text = "Start"
 
-[node name="Settings" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="Settings" type="Button" parent="PanelContainer/VBoxContainer/Buttons"]
 layout_mode = 2
 text = "Settings
 "
 
-[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer/Buttons"]
 layout_mode = 2
 text = "Quit
 "
 
-[connection signal="pressed" from="PanelContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Buttons/Start" to="." method="_on_start_pressed"]

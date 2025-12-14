@@ -21,9 +21,9 @@ extends CharacterBody2D
 @onready var interact_animation: AnimationPlayer = $InteractionAnimation
 @onready var coyote_timer: Timer = $CoyoteTimer
 
-# MOVEMENT
-var inertia = 0
+# PLAYER MOVEMENT
 
+var inertia = 0
 func _physics_process(delta: float) -> void:
 # RUN
 	if Input.is_action_pressed("run"):
@@ -50,20 +50,6 @@ func _physics_process(delta: float) -> void:
 		if not is_on_floor():
 			inertia -= acceleration / 2.66
 		animated_sprite.flip_h = true
-	if animated_sprite.flip_h == false:
-		held_item.scale.x = 1
-		held_item.position.x = 10
-	if animated_sprite.flip_h == true:
-		held_item.scale.x = -1
-		held_item.position.x = -10
-# DIRECTION SYNCHRONIZATION MANAGER
-	var current_interaction_animation = interact_animation.current_animation
-	if direction == 1 and not current_interaction_animation == "MineRight":
-		if Input.is_action_pressed("interact"):
-			interact_animation.play("MineRight")
-	if direction == -1 and not current_interaction_animation == "MineLeft":
-		if Input.is_action_pressed("interact"):
-			interact_animation.play("MineLeft")
 # INERTIA
 	inertia = clamp(inertia, -max_inertia, max_inertia)
 	if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
@@ -108,14 +94,26 @@ func get_trailing_number(s: String) -> int:
 			break
 	return int(digits)
 
-# make a hold button and attach it to interact
+# HELD ITEM INTERACTIONS
 
-func _input(event: InputEvent) -> void:
-	if Input.is_action_pressed("interact"):
-		is_interacting = true
-	else:
-		is_interacting = false
-		interact_animation.stop()
+func _process(delta: float) -> void:
+	is_interacting = Input.is_action_pressed("interact")
+	if animated_sprite.flip_h == false:
+		held_item.scale.x = 1
+		held_item.position.x = 10
+		if is_interacting == true and interact_animation.current_animation != "MineRight":
+			interact_animation.play("MineRight")
+		if is_interacting == false and interact_animation.current_animation == "MineRight":
+			interact_animation.stop()
+	if animated_sprite.flip_h == true:
+		held_item.scale.x = -1
+		held_item.position.x = -10
+		if is_interacting == true and interact_animation.current_animation != "MineLeft":
+			interact_animation.play("MineLeft")
+		if is_interacting == false and interact_animation.current_animation == "MineLeft":
+			interact_animation.stop()
+
+# INVENTORY
 
 func update_held_item(item: String):
 	var item_scene = load(item)

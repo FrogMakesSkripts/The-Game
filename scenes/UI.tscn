@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://dwm4xxftvc85p"]
 
-[ext_resource type="Texture2D" uid="uid://dty6ccfqw33y5" path="res://assets/items/Basic_Pickaxe.png" id="1_dj8aq"]
+[ext_resource type="Texture2D" uid="uid://dty6ccfqw33y5" path="res://assets/sprites/items/Basic_Pickaxe.png" id="1_dj8aq"]
+
 
 [node name="UI" type="Control"]
 layout_mode = 3
