@@ -13,6 +13,7 @@ func break_tile(tilemap: TileMap, world_position: Vector2) -> void:
 	var local_pos: Vector2 = tilemap.to_local(world_position)
 	var cell: Vector2i = tilemap.local_to_map(local_pos)
 	tilemap.erase_cell(0, cell)
+	
 
 func _on_pickaxe_point_body_entered(body: Node2D) -> void:
 	if body is TileMap:
@@ -21,3 +22,4 @@ func _on_pickaxe_point_body_entered(body: Node2D) -> void:
 		if interact_animation.is_playing() and player.is_interacting:
 			break_tile(body, mine_area.global_position)
 			player.is_interacting = false
+			player.interact_animation.stop()

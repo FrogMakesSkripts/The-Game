@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://8448o5p3xu46"]
+[gd_scene load_steps=18 format=3 uid="uid://8448o5p3xu46"]
 
+[ext_resource type="Script" uid="uid://co4qbfwxqa24h" path="res://scenes/game_manager.gd" id="1_gee14"]
 [ext_resource type="Texture2D" uid="uid://pwbncltcsxl4" path="res://assets/sprites/Natural-Bright Tileset.png" id="1_iywne"]
 [ext_resource type="PackedScene" uid="uid://dbbi4qwe2t2ee" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://bw1h85152uc0s" path="res://scenes/death.tscn" id="3_iywne"]
@@ -107,6 +108,7 @@ _data = {
 }
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_gee14")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_lbhrr")
@@ -155,10 +157,13 @@ position = Vector2(120, -104)
 [node name="BlubWall2" parent="Enemy Setup" instance=ExtResource("7_u5sy4")]
 position = Vector2(-8, -104)
 
-[node name="Player" parent="." instance=ExtResource("1_uwrxv")]
+[node name="Player1" parent="." instance=ExtResource("1_uwrxv")]
 position = Vector2(-2, 0)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player1"]
 position = Vector2(-1, 1)
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
+
+[node name="Player2" parent="." instance=ExtResource("1_uwrxv")]
+position = Vector2(24, 0)

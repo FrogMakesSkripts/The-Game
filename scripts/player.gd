@@ -13,9 +13,9 @@ extends CharacterBody2D
 @export var acceleration = 1.5
 @export var deceleration = 0.7
 
+@export var player_id: int = 0
 @export var is_interacting: bool = false
 
-@onready var player: CharacterBody2D = $"."
 @onready var held_item: Node2D = $HeldItem
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var interact_animation: AnimationPlayer = $InteractionAnimation
@@ -26,7 +26,7 @@ extends CharacterBody2D
 var inertia = 0
 func _physics_process(delta: float) -> void:
 # RUN
-	if Input.is_action_pressed("run"):
+	if Input.is_action_pressed("run", player_id):
 		max_inertia = 45
 		acceleration = 2
 # ANIMATION
@@ -38,13 +38,13 @@ func _physics_process(delta: float) -> void:
 		animated_sprite.play("Jump")
 # DIRECTION
 	direction = 0
-	if Input.is_action_pressed("move_right"):
+	if Input.is_action_pressed("move_right", player_id):
 		direction = 1
 		inertia += acceleration
 		if not is_on_floor():
 			inertia += acceleration / 2.66
 		animated_sprite.flip_h = false
-	if Input.is_action_pressed("move_left"):
+	if Input.is_action_pressed("move_left", player_id):
 		direction = -1
 		inertia -= acceleration
 		if not is_on_floor():
@@ -52,9 +52,9 @@ func _physics_process(delta: float) -> void:
 		animated_sprite.flip_h = true
 # INERTIA
 	inertia = clamp(inertia, -max_inertia, max_inertia)
-	if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
+	if Input.is_action_pressed("move_right", player_id) or Input.is_action_pressed("move_left", player_id):
 		pass
-	if not Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
+	if not Input.is_action_pressed("move_right", player_id) and not Input.is_action_pressed("move_left", player_id):
 		if animated_sprite.flip_h == false:
 			if inertia >= deceleration:
 				inertia -= deceleration
@@ -68,7 +68,7 @@ func _physics_process(delta: float) -> void:
 # GRAVITY
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	if Input.is_action_pressed("jump") and (is_on_floor() or not coyote_timer.is_stopped()):
+	if Input.is_action_pressed("jump", player_id) and (is_on_floor() or not coyote_timer.is_stopped()):
 		velocity.y = jump + (-coyote_timer.time_left * 2)
 # TRANSFORM
 	var was_on_floor = is_on_floor()
@@ -97,7 +97,7 @@ func get_trailing_number(s: String) -> int:
 # HELD ITEM INTERACTIONS
 
 func _process(delta: float) -> void:
-	is_interacting = Input.is_action_pressed("interact")
+	is_interacting = Input.is_action_pressed("interact", player_id)
 	if animated_sprite.flip_h == false:
 		held_item.scale.x = 1
 		held_item.position.x = 10

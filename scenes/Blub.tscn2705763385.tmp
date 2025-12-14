@@ -48,12 +48,16 @@ height = 14.0
 script = ExtResource("1_sqqpf")
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
-target_position = Vector2(-8, 0)
+target_position = Vector2(-12, 0)
 collision_mask = 4
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
-target_position = Vector2(8, 0)
+target_position = Vector2(12, 0)
 collision_mask = 4
+
+[node name="RayCastDown" type="RayCast2D" parent="."]
+position = Vector2(3, 0)
+target_position = Vector2(0, 8)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)
