@@ -13,48 +13,47 @@ extends CharacterBody2D
 @export var acceleration = 1.5
 @export var deceleration = 0.7
 
-@export var player_id: int = 0
+@export var player_id: int
 @export var is_interacting: bool = false
 
 @onready var held_item: Node2D = $HeldItem
+@onready var item_scene_cache: Dictionary = {}
+
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var interact_animation: AnimationPlayer = $InteractionAnimation
 @onready var coyote_timer: Timer = $CoyoteTimer
+
+@onready var player = animated_sprite.get_parent()
+@onready var game = player.get_parent()
 
 # PLAYER MOVEMENT
 
 var inertia = 0
 func _physics_process(delta: float) -> void:
-# RUN
-	if Input.is_action_pressed("run", player_id):
+	if game.input_run[player_id] == true:
 		max_inertia = 45
 		acceleration = 2
-# ANIMATION
 		if inertia > 5:
 			animated_sprite.play("Run")
 	elif is_on_floor():
 		animated_sprite.play("Idle")
 	if not is_on_floor():
 		animated_sprite.play("Jump")
-# DIRECTION
 	direction = 0
-	if Input.is_action_pressed("move_right", player_id):
+	if game.input_move_right[player_id] == true:
 		direction = 1
 		inertia += acceleration
 		if not is_on_floor():
 			inertia += acceleration / 2.66
 		animated_sprite.flip_h = false
-	if Input.is_action_pressed("move_left", player_id):
+	if game.input_move_left[player_id] == true:
 		direction = -1
 		inertia -= acceleration
 		if not is_on_floor():
 			inertia -= acceleration / 2.66
 		animated_sprite.flip_h = true
-# INERTIA
 	inertia = clamp(inertia, -max_inertia, max_inertia)
-	if Input.is_action_pressed("move_right", player_id) or Input.is_action_pressed("move_left", player_id):
-		pass
-	if not Input.is_action_pressed("move_right", player_id) and not Input.is_action_pressed("move_left", player_id):
+	if not game.input_move_right[player_id] == true and not game.input_move_left[player_id] == true:
 		if animated_sprite.flip_h == false:
 			if inertia >= deceleration:
 				inertia -= deceleration
@@ -65,17 +64,17 @@ func _physics_process(delta: float) -> void:
 				inertia += deceleration
 			if inertia > -deceleration:
 				inertia = 0
-# GRAVITY
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	if Input.is_action_pressed("jump", player_id) and (is_on_floor() or not coyote_timer.is_stopped()):
+	if game.input_jump[player_id] and (is_on_floor() or not coyote_timer.is_stopped()):
 		velocity.y = jump + (-coyote_timer.time_left * 2)
-# TRANSFORM
 	var was_on_floor = is_on_floor()
 	velocity.x = direction * speed + inertia
 	move_and_slide()
 	if was_on_floor and not is_on_floor():
 		coyote_timer.start()
+
+# TOOL FUNCTIONS
 
 func get_non_digits(s: String) -> String:
 	var text := ""
@@ -97,7 +96,7 @@ func get_trailing_number(s: String) -> int:
 # HELD ITEM INTERACTIONS
 
 func _process(delta: float) -> void:
-	is_interacting = Input.is_action_pressed("interact", player_id)
+	is_interacting = game.input_interact[player_id]
 	if animated_sprite.flip_h == false:
 		held_item.scale.x = 1
 		held_item.position.x = 10
@@ -115,9 +114,17 @@ func _process(delta: float) -> void:
 
 # INVENTORY
 
-func update_held_item(item: String):
-	var item_scene = load(item)
-	var instance = item_scene.instantiate()
+func update_held_item(item: String) -> void:
+	var scene: PackedScene
+	if item_scene_cache.has(item):
+		scene = item_scene_cache[item]
+	else:
+		scene = load(item)
+		if scene == null:
+			push_error("Invalid item scene: " + item)
+			return
+		item_scene_cache[item] = scene
+	var instance := scene.instantiate()
 	held_item.add_child(instance)
 
 func update_inventory():
