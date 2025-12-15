@@ -24,7 +24,8 @@ extends CharacterBody2D
 @onready var coyote_timer: Timer = $CoyoteTimer
 
 @onready var player = animated_sprite.get_parent()
-@onready var game = player.get_parent()
+@onready var players = player.get_parent()
+@onready var game = players.get_parent()
 
 # PLAYER MOVEMENT
 

@@ -1,5 +1,7 @@
 extends Node2D
 
+@onready var players: Node = $Players
+
 const player_scene = preload("res://scenes/player.tscn")
 const player_limit = 4
 const player_spawnpoint = 24
@@ -23,7 +25,7 @@ func _ready() -> void:
 			var device_name = Input.get_joy_name(device_id)
 			print("Connected Controller: " + str(device_name) + ", with ID: " + str(device_id))
 			var player = player_scene.instantiate()
-			add_child(player)
+			players.add_child(player)
 			player.position.x = player_spawnpoint - (device_id * player_spacing)
 			player.player_id = device_id
 			print("Assigned Controller with ID: " + str(device_id) + ", to player: " + str(player.player_id))

@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://8448o5p3xu46"]
+[gd_scene load_steps=18 format=3 uid="uid://8448o5p3xu46"]
 
 [ext_resource type="Script" uid="uid://co4qbfwxqa24h" path="res://scripts/game_manager.gd" id="1_gee14"]
 [ext_resource type="Texture2D" uid="uid://pwbncltcsxl4" path="res://assets/sprites/Natural-Bright Tileset.png" id="1_iywne"]
 [ext_resource type="PackedScene" uid="uid://bw1h85152uc0s" path="res://scenes/death.tscn" id="3_iywne"]
 [ext_resource type="PackedScene" uid="uid://dxau78647u5pu" path="res://scenes/platform.tscn" id="3_lnu2h"]
+[ext_resource type="Script" uid="uid://b26k0en4ojsys" path="res://scripts/camera.gd" id="4_gee14"]
 [ext_resource type="PackedScene" uid="uid://dxhn4qdfo6250" path="res://scenes/Pickaxe.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://c6i0omgtrpc3e" path="res://scenes/Blub.tscn" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://c6f8mlkoddnpj" path="res://scenes/Blub_wall.tscn" id="7_u5sy4"]
@@ -121,6 +122,13 @@ position = Vector2(0, 62)
 position = Vector2(0, 5)
 shape = SubResource("WorldBoundaryShape2D_p57ef")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+position_smoothing_enabled = true
+script = ExtResource("4_gee14")
+
+[node name="Players" type="Node" parent="."]
+
 [node name="Platforms" type="Node" parent="."]
 
 [node name="Platform" parent="Platforms" instance=ExtResource("3_lnu2h")]
@@ -155,8 +163,3 @@ position = Vector2(120, -104)
 
 [node name="BlubWall2" parent="Enemy Setup" instance=ExtResource("7_u5sy4")]
 position = Vector2(-8, -104)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-3, 1)
-zoom = Vector2(3, 3)
-position_smoothing_enabled = true
