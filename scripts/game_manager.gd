@@ -30,6 +30,14 @@ func _ready() -> void:
 			player.player_id = device_id
 			print("Assigned Controller with ID: " + str(device_id) + ", to player: " + str(player.player_id))
 			print(" ")
+	if not controllers:
+		print("No Controllers found, defaulting to keyboard.")
+		var player = player_scene.instantiate()
+		players.add_child(player)
+		player.position.x = player_spawnpoint
+		player.player_id = 0
+		print("Assigned Keyboard to player: " + str(player.player_id))
+		print(" ")
 
 # INPUT HANDLER
 
@@ -51,3 +59,15 @@ func _input(event: InputEvent) -> void:
 			input_move_left[device_id] = event.axis_value < -deadzone
 		if event.is_action("move_right"):
 			input_move_right[device_id] = event.axis_value > deadzone
+	elif event is InputEventKey:
+		if event.is_action("move_left"):
+			input_move_left[device_id] = event.pressed
+		if event.is_action("move_right"):
+			input_move_right[device_id] = event.pressed
+		if event.is_action("run"):
+			input_run[device_id] = event.pressed
+		if event.is_action("jump"):
+			input_jump[device_id] = event.pressed
+	elif event is InputEventMouse:
+		if event.is_action("interact"):
+			input_interact[device_id] = event.pressed
