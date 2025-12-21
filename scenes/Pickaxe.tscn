@@ -30,4 +30,4 @@ shape = SubResource("CircleShape2D_ng6u3")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="PickaxePoint" to="." method="_on_pickaxe_point_body_entered"]
-[connection signal="body_entered" from="PickaxePoint" to="." method="_on_pickaxe_point_right_body_entered"]
+[connection signal="body_exited" from="PickaxePoint" to="." method="_on_pickaxe_point_body_exited"]

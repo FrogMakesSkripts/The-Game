@@ -19,7 +19,7 @@ var input_interact := {0: false, 1: false, 2: false, 3: false}
 # CONNECTION MANAGER
 
 func _ready() -> void:
-	print("Available Players:" + str(player_limit))
+	print("Available Players: " + str(player_limit))
 	for device_id in controllers:
 		if device_id < player_limit:
 			var device_name = Input.get_joy_name(device_id)
