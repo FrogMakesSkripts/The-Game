@@ -10,6 +10,8 @@ const player_spacing = 16
 @export var controllers: Array = Input.get_connected_joypads()
 @export var deadzone: float = 0.5
 
+@export var enable_input: bool = true
+
 var input_move_left := {0: false, 1: false, 2: false, 3: false}
 var input_move_right := {0: false, 1: false, 2: false, 3: false}
 var input_run := {0: false, 1: false, 2: false, 3: false}
@@ -42,32 +44,33 @@ func _ready() -> void:
 # INPUT HANDLER
 
 func _input(event: InputEvent) -> void:
-	var device_id := event.device
-	if event is InputEventJoypadButton:
-		if event.is_action("move_left"):
-			input_move_left[device_id] = event.pressed
-		if event.is_action("move_right"):
-			input_move_right[device_id] = event.pressed
-		if event.is_action("run"):
-			input_run[device_id] = event.pressed
-		if event.is_action("jump"):
-			input_jump[device_id] = event.pressed
-		if event.is_action("interact"):
-			input_interact[device_id] = event.pressed
-	elif event is InputEventJoypadMotion:
-		if event.is_action("move_left"):
-			input_move_left[device_id] = event.axis_value < -deadzone
-		if event.is_action("move_right"):
-			input_move_right[device_id] = event.axis_value > deadzone
-	elif event is InputEventKey:
-		if event.is_action("move_left"):
-			input_move_left[device_id] = event.pressed
-		if event.is_action("move_right"):
-			input_move_right[device_id] = event.pressed
-		if event.is_action("run"):
-			input_run[device_id] = event.pressed
-		if event.is_action("jump"):
-			input_jump[device_id] = event.pressed
-	elif event is InputEventMouse:
-		if event.is_action("interact"):
-			input_interact[device_id] = event.pressed
+	if enable_input == true or enable_input == null:
+		var device_id := event.device
+		if event is InputEventJoypadButton:
+			if event.is_action("move_left"):
+				input_move_left[device_id] = event.pressed
+			if event.is_action("move_right"):
+				input_move_right[device_id] = event.pressed
+			if event.is_action("run"):
+				input_run[device_id] = event.pressed
+			if event.is_action("jump"):
+				input_jump[device_id] = event.pressed
+			if event.is_action("interact"):
+				input_interact[device_id] = event.pressed
+		elif event is InputEventJoypadMotion:
+			if event.is_action("move_left"):
+				input_move_left[device_id] = event.axis_value < -deadzone
+			if event.is_action("move_right"):
+				input_move_right[device_id] = event.axis_value > deadzone
+		elif event is InputEventKey:
+			if event.is_action("move_left"):
+				input_move_left[device_id] = event.pressed
+			if event.is_action("move_right"):
+				input_move_right[device_id] = event.pressed
+			if event.is_action("run"):
+				input_run[device_id] = event.pressed
+			if event.is_action("jump"):
+				input_jump[device_id] = event.pressed
+		elif event is InputEventMouse:
+			if event.is_action("interact"):
+				input_interact[device_id] = event.pressed

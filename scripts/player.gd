@@ -126,6 +126,8 @@ func update_held_item(item: String) -> void:
 			return
 		item_scene_cache[item] = scene
 	var instance := scene.instantiate()
+	var pickup_area = instance.find_child("PickupArea", true, false)
+	pickup_area.disabled = true
 	held_item.add_child(instance)
 
 func update_inventory():
